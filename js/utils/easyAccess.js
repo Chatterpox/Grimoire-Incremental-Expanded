@@ -1,3 +1,19 @@
+
+let runeMultBank = {
+	clickRuneMult: new Decimal(1),
+	idleRuneMult: new Decimal(1),
+	totalRuneMult: new Decimal(1),
+}
+
+let gainValuesBank = {
+	clickGain: new Decimal(1),
+	idleGain: new Decimal(0),
+}
+
+function setClickRuneMult(num) {
+	clickRuneMult = num
+}
+
 function hasUpgrade(layer, id) {
 	return ((player[layer].upgrades.includes(toNumber(id)) || player[layer].upgrades.includes(id.toString())) && !tmp[layer].deactivated)
 }
@@ -45,7 +61,7 @@ function setClickableState(layer, id, state) {
 function getGridData(layer, id) {
 	return (player[layer].grid[id])
 }
-
+A
 function setGridData(layer, id, data) {
 	player[layer].grid[id] = data
 }
