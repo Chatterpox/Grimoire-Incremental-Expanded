@@ -33,17 +33,28 @@ addLayer("g", {
     layerShown(){return true},
     clickables: {
         11: {
-            display() {return "Click here to gain Runes<br>(<h3>+" + format((new Decimal(1).mul(getBuyableAmount("g", 11).add(1))).mul(clickRuneMult)) + ")</h3>"},
+            title() { return "Click to gain Runes<br>(+" + format(getBuyableAmount(this.layer, 11).add(1)) + ")"},
             canClick() { return true},
-            onClick() { player.points = player.points.add(gainValuesBank.clickGain) },
-            onHold() { player.points = player.points.add(new Decimal(1).mul(getBuyableAmount("g", 11).add(1))) },
+            onClick() { player.points = player.points.add(getBuyableAmount(this.layer, 11).add(1)) },
+            onHold() { player.points = player.points.add(getBuyableAmount(this.layer, 11).add(1)) },
         }
     },
     buyables: {
         11: {
             cost(x) { return new Decimal(2).pow(x).mul(50) },
-            title() { return format(getBuyableAmount("g", 11)) + " Profiency<br>Cost: " + format(this.cost) + " Runes"},
-            display() { return "+1 Runes/click" },
+            title() { return format(getBuyableAmount("g", 11)) + " Profiency<br>Cost: " + format(this.cost()) + " Runes"},
+            display() { return "+1 Rune/click<br>Effect before multipliers: +<h3>" + format(getBuyableAmount(this.layer, 11))  + "</h3>" },
+            canAfford() { return player.points.gte(this.cost()) },
+            buy() {
+                player.points = player.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+        },
+        12: {
+            unlocked() { return getBuyableAmount("g", 11).gte(5)},
+            cost(x) { return new Decimal(2).pow(x).mul(1000) },
+            title() { return format(getBuyableAmount("g", 12)) + " Flow<br>Cost: " + format(this.cost()) + " Runes"},
+            display() { return "+1 Rune/second<br>Effect before multipliers: +<h3>" + format(getBuyableAmount(this.layer, 11))  + "</h3>" },
             canAfford() { return player.points.gte(this.cost()) },
             buy() {
                 player.points = player.points.sub(this.cost())

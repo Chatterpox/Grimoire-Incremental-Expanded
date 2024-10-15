@@ -10,10 +10,6 @@ let gainValuesBank = {
 	idleGain: new Decimal(0),
 }
 
-function setClickRuneMult(num) {
-	clickRuneMult = num
-}
-
 function hasUpgrade(layer, id) {
 	return ((player[layer].upgrades.includes(toNumber(id)) || player[layer].upgrades.includes(id.toString())) && !tmp[layer].deactivated)
 }
